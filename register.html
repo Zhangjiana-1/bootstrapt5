@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册 - 神影视频</title>
+    <link rel="stylesheet" href="dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.css">
+    <script src="dist/js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* 自定义样式 */
+        :root {
+            --primary-color: #ff4b4b;
+            --secondary-color: #6c757d;
+            --accent-color: #ffb800;
+            --dark-color: #1a1a1a;
+            --light-color: #f8f9fa;
+            --success-color: #28a745;
+            --info-color: #17a2b8;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --card-bg: #ffffff;
+            --text-dark: #343a40;
+            --text-light: #6c757d;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            color: var(--text-dark);
+        }
+        
+        /* 导航栏样式 */
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        /* 注册表单样式 */
+        .register-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+        
+        .register-title {
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+        
+        .form-control {
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            padding: 0.75rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(255, 75, 75, 0.25);
+        }
+        
+        .form-control.is-invalid {
+            border-color: var(--danger-color);
+        }
+        
+        .btn-register {
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-register:hover {
+            background-color: #e03a3a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 75, 75, 0.3);
+        }
+        
+        .login-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .login-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* 页脚链接样式 */
+        .footer-link {
+            color: var(--text-light);
+            text-decoration: none;
+            position: relative;
+            padding-bottom: 3px;
+        }
+        
+        .footer-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: var(--primary-color);
+        }
+        
+        .footer-link:hover::after {
+            width: 100%;
+        }
+        
+        /* 社交图标样式 */
+        .social-icon {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .social-icon:hover::before {
+            left: 100%;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 5px 15px rgba(255, 75, 75, 0.3);
+        }
+    </style>
+</head>
+<body>
+<!-- header begin -->
+    <header>
+        <!-- 顶部导航栏 -->
+        <nav class="navbar navbar-expand-lg navbar-white bg-white shadow-sm">
+            <div class="container">
+                <!-- Logo -->
+                <a class="navbar-brand d-flex align-items-center" href="#">
+                    <div class="bg-primary text-white rounded-circle p-2 me-3">
+                        <i class="fa fa-play-circle-o fa-2x"></i>
+                    </div>
+                    <div>
+                        <h4 class="mb-0 text-primary fw-bold">神影视频</h4>
+                        <small class="text-muted">ShenYing Video</small>
+                    </div>
+                </a>
+                
+                <!-- 搜索框 -->
+                <form class="d-flex flex-grow-1 mx-3" role="search">
+                    <div class="input-group w-100">
+                        <input class="form-control rounded-start-pill border-primary border-2" type="search" placeholder="搜索电影、电视剧、明星..." aria-label="Search">
+                        <button class="btn btn-primary rounded-end-pill border-primary border-2" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- 用户菜单 -->
+                <div class="dropdown">
+                    <button class="btn btn-outline-primary rounded-pill dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-user-circle-o me-1"></i>我的
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-lg rounded-4 mt-2" aria-labelledby="userDropdown">
+                        <!-- 修改为登录选项 -->
+                        <li><a class="dropdown-item" href="login.html"><i class="fa fa-sign-in me-2 text-primary"></i>登录</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-primary fw-bold" href="admin/index.html"><i class="fa fa-cog me-2"></i>后台管理</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- 主导航栏 -->
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: var(--dark-color);">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active fw-semibold" href="前台主页.html"><i class="fa fa-home me-1"></i>首页</a>
+                        </li>
+                    </ul>
+                    <!-- 管理入口 -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link text-primary fw-semibold" href="admin/movie_manage.html">
+                                <i class="fa fa-cog me-1"></i>电影管理
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- 推荐语 -->
+        <div class="alert alert-primary mt-3 shadow-sm border-0"> 
+            <div class="spinner-border spinner-border-sm text-white me-2"></div>
+            如果您喜欢神影视频，请把它推荐给更多的人！
+        </div>
+    </header>
+    <!-- header end -->
+
+    <!-- 注册表单区域 -->
+    <section class="py-5">
+        <div class="container">
+            <div class="register-container">
+                <h2 class="register-title">
+                    <i class="fa fa-user-plus me-2"></i>用户注册
+                </h2>
+                <form id="registerForm">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">用户名</label>
+                        <input type="text" class="form-control" id="username" placeholder="请输入3-20位用户名" required>
+                        <small class="text-danger" id="usernameError"></small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">邮箱</label>
+                        <input type="email" class="form-control" id="email" placeholder="请输入有效的邮箱地址" required>
+                        <small class="text-danger" id="emailError"></small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">密码</label>
+                        <input type="password" class="form-control" id="password" placeholder="请输入至少6位密码" required>
+                        <small class="text-danger" id="passwordError"></small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">确认密码</label>
+                        <input type="password" class="form-control" id="confirmPassword" placeholder="请再次输入密码" required>
+                        <small class="text-danger" id="confirmPasswordError"></small>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="agreeTerms" required>
+                        <label class="form-check-label" for="agreeTerms">我已阅读并同意<a href="#" class="login-link">《用户协议》</a>和<a href="#" class="login-link">《隐私政策》</a></label>
+                        <small class="text-danger" id="termsError"></small>
+                    </div>
+                    <button type="submit" class="btn btn-register w-100 text-white">立即注册</button>
+                    <div class="text-center mt-3">
+                        <p>已有账号？<a href="login.html" class="login-link">立即登录</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- footer begin -->
+    <footer class="mt-4 py-4 text-white" style="background-color: var(--dark-color);">
+        <div class="container">
+            <!-- 页脚顶部 -->
+            <div class="row g-2 mb-2">
+                <!-- 网站信息 -->
+                <div class="col-lg-10 col-md-12">
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="bg-white rounded-circle p-2 me-2">
+                            <i class="fa fa-play-circle text-primary fa-lg"></i>
+                        </div>
+                        <div>
+                            <h4 class="mb-0 text-white">神影视频</h4>
+                            <small class="text-gray-400">ShenYing Video</small>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-3 small">
+                        提供最新、最热门的电影内容，为您带来极致的观影体验。
+                        我们致力于打造最优质的在线视频平台，让您随时随地享受精彩内容。
+                    </p>
+                    <!-- 社交媒体 -->
+                    <div class="d-flex gap-4">
+                        <a href="#" class="social-icon bg-gray-800 hover:bg-primary rounded-full p-2 transition-all duration-300 transform hover:scale-110">
+                            <i class="fa fa-weixin fa-lg text-white"></i>
+                        </a>
+                        <a href="#" class="social-icon bg-gray-800 hover:bg-primary rounded-full p-2 transition-all duration-300 transform hover:scale-110">
+                            <i class="fa fa-weibo fa-lg text-white"></i>
+                        </a>
+                        <a href="#" class="social-icon bg-gray-800 hover:bg-primary rounded-full p-3 transition-all duration-300 transform hover:scale-110">
+                            <i class="fa fa-qq fa-lg text-white"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- 页脚底部 -->
+            <div class="row align-items-center pt-2 border-top border-gray-800">
+                <div class="col-md-6">
+                    <p class="text-gray-400 small mb-0">© 2025 神影视频. 保留所有权利.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item">
+                            <a href="#" class="footer-link small">关于我们</a>
+                        </li>
+                        <li class="list-inline-item mx-2">
+                            <a href="#" class="footer-link small">联系方式</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#" class="footer-link small">隐私政策</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer end -->
+    <script>
+        // 简化的表单处理脚本
+        function validateForm() {
+            let isValid = true;
+            
+            // 获取表单元素
+            const username = document.getElementById('username');
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('confirmPassword');
+            const agreeTerms = document.getElementById('agreeTerms');
+            
+            // 获取错误提示元素
+            const usernameError = document.getElementById('usernameError');
+            const emailError = document.getElementById('emailError');
+            const passwordError = document.getElementById('passwordError');
+            const confirmPasswordError = document.getElementById('confirmPasswordError');
+            const termsError = document.getElementById('termsError');
+            
+            // 重置错误信息
+            usernameError.textContent = '';
+            emailError.textContent = '';
+            passwordError.textContent = '';
+            confirmPasswordError.textContent = '';
+            termsError.textContent = '';
+            
+            // 移除错误样式
+            username.classList.remove('is-invalid');
+            email.classList.remove('is-invalid');
+            password.classList.remove('is-invalid');
+            confirmPassword.classList.remove('is-invalid');
+            
+            // 验证用户名
+            if (username.value.trim() === '') {
+                usernameError.textContent = '用户名不能为空';
+                username.classList.add('is-invalid');
+                isValid = false;
+            } else if (username.value.length < 3 || username.value.length > 20) {
+                usernameError.textContent = '用户名长度必须在3-20位之间';
+                username.classList.add('is-invalid');
+                isValid = false;
+            }
+            
+            // 验证邮箱
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email.value.trim() === '') {
+                emailError.textContent = '邮箱不能为空';
+                email.classList.add('is-invalid');
+                isValid = false;
+            } else if (!emailRegex.test(email.value)) {
+                emailError.textContent = '请输入有效的邮箱地址';
+                email.classList.add('is-invalid');
+                isValid = false;
+            }
+            
+            // 验证密码
+            if (password.value === '') {
+                passwordError.textContent = '密码不能为空';
+                password.classList.add('is-invalid');
+                isValid = false;
+            } else if (password.value.length < 6) {
+                passwordError.textContent = '密码长度不能少于6位';
+                password.classList.add('is-invalid');
+                isValid = false;
+            }
+            
+            // 验证确认密码
+            if (confirmPassword.value === '') {
+                confirmPasswordError.textContent = '请确认密码';
+                confirmPassword.classList.add('is-invalid');
+                isValid = false;
+            } else if (confirmPassword.value !== password.value) {
+                confirmPasswordError.textContent = '两次输入的密码不一致';
+                confirmPassword.classList.add('is-invalid');
+                isValid = false;
+            }
+            
+            // 验证同意条款
+            if (!agreeTerms.checked) {
+                termsError.textContent = '请阅读并同意用户协议和隐私政策';
+                isValid = false;
+            }
+            
+            return isValid;
+        }
+        
+        // 获取表单元素
+        const registerForm = document.getElementById('registerForm');
+        
+        // 为表单添加提交事件监听器
+        if (registerForm) {
+            registerForm.addEventListener('submit', function(e) {
+                // 阻止表单默认提交行为
+                e.preventDefault();
+                
+                // 执行验证
+                if (validateForm()) {
+                    // 注册成功，显示提示并跳转
+                    alert('注册成功！即将跳转到登录页面');
+                    window.location.href = 'login.html';
+                }
+            });
+        }
+        
+        // 为输入字段添加实时验证
+        document.getElementById('username').addEventListener('blur', validateForm);
+        document.getElementById('email').addEventListener('blur', validateForm);
+        document.getElementById('password').addEventListener('blur', validateForm);
+        document.getElementById('confirmPassword').addEventListener('blur', validateForm);
+        document.getElementById('agreeTerms').addEventListener('change', validateForm);
+
+    </script>
+</body>
+</html>

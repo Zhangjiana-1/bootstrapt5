@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绿巨人2 - 电影详情 - 神影视频</title>
+    <link rel="stylesheet" href="dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.css">
+    <script src="dist/js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* 自定义样式 */
+        :root {
+            --primary-color: #ff4b4b;
+            --secondary-color: #6c757d;
+            --accent-color: #ffb800;
+            --dark-color: #1a1a1a;
+            --light-color: #f8f9fa;
+            --success-color: #28a745;
+            --info-color: #17a2b8;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --card-bg: #ffffff;
+            --text-dark: #343a40;
+            --text-light: #6c757d;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            color: var(--text-dark);
+        }
+        
+        /* 导航栏样式 */
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        /* 电影详情页样式 */
+        .movie-detail-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+        
+        .movie-poster {
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .movie-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+        
+        .movie-rating {
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .movie-info {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+        
+        .movie-info li {
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+        
+        .movie-info li strong {
+            color: var(--text-dark);
+            margin-right: 0.5rem;
+        }
+        
+        .movie-tag {
+            display: inline-block;
+            background-color: rgba(255, 75, 75, 0.1);
+            color: var(--primary-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .watch-btn {
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .watch-btn:hover {
+            background-color: #e03a3a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 75, 75, 0.3);
+        }
+        
+        /* 推荐电影卡片 */
+        .recommend-card {
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .recommend-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .recommend-card img {
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        /* 页脚链接样式 */
+        .footer-link {
+            color: var(--text-light);
+            text-decoration: none;
+            position: relative;
+            padding-bottom: 3px;
+        }
+        
+        .footer-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: var(--primary-color);
+        }
+        
+        .footer-link:hover::after {
+            width: 100%;
+        }
+        
+        /* 社交图标样式 */
+        .social-icon {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .social-icon:hover::before {
+            left: 100%;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 5px 15px rgba(255, 75, 75, 0.3);
+        }
+    </style>
+</head>
+<body>
+<!-- header begin -->
+    <header>
+        <!-- 顶部导航栏 -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+            <div class="container">
+                <!-- Logo -->
+                <a class="navbar-brand d-flex align-items-center" href="前台主页.html">
+                    <div class="bg-primary text-white rounded-circle p-2 me-3">
+                        <i class="fa fa-play-circle-o fa-2x"></i>
+                    </div>
+                    <div>
+                        <h4 class="mb-0 text-primary fw-bold">神影视频</h4>
+                        <small class="text-muted">ShenYing Video</small>
+                    </div>
+                </a>
+                
+                <!-- 搜索框 -->
+                <form class="d-flex flex-grow-1 mx-3" role="search">
+                    <div class="input-group w-100">
+                        <input class="form-control rounded-start-pill border-primary border-2" type="search" placeholder="搜索电影、电视剧、明星..." aria-label="Search">
+                        <button class="btn btn-primary rounded-end-pill border-primary border-2 text-white" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- 用户菜单 -->
+                <div class="dropdown">
+                    <button class="btn btn-outline-primary rounded-pill dropdown-toggle text-primary" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-user-circle-o me-1"></i>我的
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-lg rounded-4 mt-2" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="register.html"><i class="fa fa-user-plus me-2 text-primary"></i>注册</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-primary fw-bold" href="admin/index.html"><i class="fa fa-cog me-2"></i>后台管理</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- 主导航栏 -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active fw-semibold text-white" href="前台主页.html"><i class="fa fa-home me-1 text-white"></i>首页</a>
+                        </li>
+                    </ul>
+                    <!-- 管理入口 -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link text-white fw-semibold" href="admin/movie_manage.html">
+                                <i class="fa fa-cog me-1"></i>电影管理
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- header end -->
+
+    <!-- 电影详情区域 -->
+    <section class="py-5">
+        <div class="container">
+            <!-- 面包屑导航 -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="前台主页.html" class="text-primary">首页</a></li>
+                    <li class="breadcrumb-item"><a href="#" class="text-primary">电影</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">绿巨人2</li>
+                </ol>
+            </nav>
+
+            <div class="movie-detail-container">
+                <!-- 电影基本信息 -->
+                <div class="row">
+                    <!-- 电影海报 -->
+                    <div class="col-md-3">
+                        <img src="image/01.png" alt="绿巨人2" class="movie-poster img-fluid">
+                    </div>
+                    <!-- 电影详情 -->
+                    <div class="col-md-9">
+                        <h1 class="movie-title">绿巨人2</h1>
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="movie-rating">
+                                <i class="fa fa-star text-white"></i> 8.5
+                            </span>
+                            <span class="ms-3 text-muted">2008年上映</span>
+                        </div>
+                        <!-- 电影标签 -->
+                        <div class="mb-3">
+                            <span class="movie-tag">科幻</span>
+                            <span class="movie-tag">动作</span>
+                            <span class="movie-tag">冒险</span>
+                        </div>
+                        <!-- 电影信息列表 -->
+                        <ul class="movie-info">
+                            <li><strong>导演:</strong> 路易斯·莱特里尔</li>
+                            <li><strong>主演:</strong> 爱德华·诺顿, 丽芙·泰勒, 蒂姆·罗斯</li>
+                            <li><strong>类型:</strong> 科幻 / 动作 / 冒险</li>
+                            <li><strong>地区:</strong> 美国</li>
+                            <li><strong>语言:</strong> 英语</li>
+                            <li><strong>上映时间:</strong> 2008-06-13</li>
+                            <li><strong>片长:</strong> 112分钟</li>
+                            <li><strong>IMDb:</strong> tt0800080</li>
+                        </ul>
+                        <!-- 观看按钮 -->
+                        <div class="mt-4">
+                            <button class="watch-btn text-white me-3">
+                                <i class="fa fa-play-circle-o me-2"></i>立即观看
+                            </button>
+                            <button class="btn btn-outline-primary">
+                                <i class="fa fa-plus me-2"></i>加入收藏
+                            </button>
+                            <button class="btn btn-outline-secondary ms-2">
+                                <i class="fa fa-share-alt me-2"></i>分享
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 剧情简介 -->
+                <div class="mt-4">
+                    <h2 class="section-title">
+                        <i class="fa fa-file-text-o me-2 text-primary"></i>剧情简介
+                    </h2>
+                    <p class="text-muted">
+                        布鲁斯·班纳（爱德华·诺顿 Edward Norton 饰）是一名著名的科学家，在一次实验中，他误触了伽马射线装置，导致自己的身体发生了巨大的变化。每当他情绪激动或愤怒时，就会变身成为一个身高2米多、力大无穷的绿色巨人。
+                    </p>
+                    <p class="text-muted">
+                        为了躲避军方的追捕和寻找治愈方法，布鲁斯四处逃亡。在逃亡过程中，他遇到了旧爱贝蒂（丽芙·泰勒 Liv Tyler 饰），并得知军方正在进行一项名为"超级士兵"的计划，试图利用他的DNA制造出更强的战士。
+                    </p>
+                    <p class="text-muted">
+                        与此同时，布鲁斯的父亲（威廉·赫特 William Hurt 饰）也在暗中策划着一个更大的阴谋。面对双重威胁，布鲁斯必须学会控制自己的力量，保护自己和他所爱的人。
+                    </p>
+                </div>
+
+                <!-- 演员列表 -->
+                <div class="mt-4">
+                    <h2 class="section-title">
+                        <i class="fa fa-users me-2 text-primary"></i>演员列表
+                    </h2>
+                    <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 g-3">
+                        <div class="col">
+                            <div class="text-center">
+                                <div class="rounded-circle overflow-hidden mx-auto" style="width: 80px; height: 80px; background-color: #f0f0f0;">
+                                    <i class="fa fa-user fa-3x text-muted d-flex align-items-center justify-content-center" style="height: 100%;"></i>
+                                </div>
+                                <h6 class="mt-2 text-dark">爱德华·诺顿</h6>
+                                <p class="text-muted small">布鲁斯·班纳</p>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="text-center">
+                                <div class="rounded-circle overflow-hidden mx-auto" style="width: 80px; height: 80px; background-color: #f0f0f0;">
+                                    <i class="fa fa-user fa-3x text-muted d-flex align-items-center justify-content-center" style="height: 100%;"></i>
+                                </div>
+                                <h6 class="mt-2 text-dark">丽芙·泰勒</h6>
+                                <p class="text-muted small">贝蒂</p>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="text-center">
+                                <div class="rounded-circle overflow-hidden mx-auto" style="width: 80px; height: 80px; background-color: #f0f0f0;">
+                                    <i class="fa fa-user fa-3x text-muted d-flex align-items-center justify-content-center" style="height: 100%;"></i>
+                                </div>
+                                <h6 class="mt-2 text-dark">蒂姆·罗斯</h6>
+                                <p class="text-muted small">埃米尔·布朗斯基</p>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="text-center">
+                                <div class="rounded-circle overflow-hidden mx-auto" style="width: 80px; height: 80px; background-color: #f0f0f0;">
+                                    <i class="fa fa-user fa-3x text-muted d-flex align-items-center justify-content-center" style="height: 100%;"></i>
+                                </div>
+                                <h6 class="mt-2 text-dark">威廉·赫特</h6>
+                                <p class="text-muted small">罗斯将军</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 推荐电影 -->
+                <div class="mt-4">
+                    <h2 class="section-title">
+                        <i class="fa fa-thumbs-up me-2 text-primary"></i>猜你喜欢
+                    </h2>
+                    <div class="row row-cols-1 row-cols-md-4 g-3">
+                        <!-- 推荐电影 1 -->
+                        <div class="col">
+                            <a href="#" class="text-decoration-none">
+                                <div class="recommend-card">
+                                    <img src="image/02.png" class="w-100" alt="蚁人">
+                                    <div class="p-3">
+                                        <h5 class="text-dark">蚁人</h5>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="badge bg-warning text-dark">科幻</span>
+                                            <span class="text-warning"><i class="fa fa-star"></i> 8.2</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- 推荐电影 2 -->
+                        <div class="col">
+                            <a href="#" class="text-decoration-none">
+                                <div class="recommend-card">
+                                    <img src="image/03.png" class="w-100" alt="复仇者联盟">
+                                    <div class="p-3">
+                                        <h5 class="text-dark">复仇者联盟</h5>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="badge bg-warning text-dark">科幻</span>
+                                            <span class="text-warning"><i class="fa fa-star"></i> 9.0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- 推荐电影 3 -->
+                        <div class="col">
+                            <a href="#" class="text-decoration-none">
+                                <div class="recommend-card">
+                                    <img src="image/04.png" class="w-100" alt="钢铁侠3">
+                                    <div class="p-3">
+                                        <h5 class="text-dark">钢铁侠3</h5>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="badge bg-warning text-dark">科幻</span>
+                                            <span class="text-warning"><i class="fa fa-star"></i> 8.7</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- 推荐电影 4 -->
+                        <div class="col">
+                            <a href="#" class="text-decoration-none">
+                                <div class="recommend-card">
+                                    <img src="image/05.png" class="w-100" alt="雷神">
+                                    <div class="p-3">
+                                        <h5 class="text-dark">雷神</h5>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="badge bg-warning text-dark">科幻</span>
+                                            <span class="text-warning"><i class="fa fa-star"></i> 8.3</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- footer begin -->
+    <footer class="mt-4 py-4 text-white" style="background-color: #007bff;">
+        <div class="container">
+            <!-- 页脚顶部 -->
+            <div class="row g-2 mb-2">
+                <!-- 网站信息 -->
+                <div class="col-lg-10 col-md-12">
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="bg-white rounded-circle p-2 me-2">
+                        <i class="fa fa-play-circle text-primary fa-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="mb-0 text-white">神影视频</h4>
+                            <small class="text-white">ShenYing Video</small>
+                        </div>
+                    </div>
+                    <p class="text-white mb-3 small">
+                        25软件工程专升本A班张佳娜
+                    </p>
+                    <p class="text-white mb-3 small">
+                        提供最新、最热门的电影内容，为您带来极致的观影体验。
+                        我们致力于打造最优质的在线视频平台，让您随时随地享受精彩内容。
+                    </p>
+                    <!-- 社交媒体 -->
+                    <div class="d-flex gap-4">
+                        <a href="#" class="social-icon bg-white border border-primary rounded-full p-2 transition-all duration-300 transform hover:scale-110">
+                            <i class="fa fa-weixin fa-lg text-primary"></i>
+                        </a>
+                        <a href="#" class="social-icon bg-white border border-primary rounded-full p-2 transition-all duration-300 transform hover:scale-110">
+                            <i class="fa fa-weibo fa-lg text-primary"></i>
+                        </a>
+                        <a href="#" class="social-icon bg-white border border-primary rounded-full p-3 transition-all duration-300 transform hover:scale-110">
+                            <i class="fa fa-qq fa-lg text-primary"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- 页脚底部 -->
+            <div class="row align-items-center pt-2 border-top border-light">
+                <div class="col-md-6">
+                    <p class="text-white small mb-0">© 2025 神影视频. 保留所有权利.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item">
+                            <a href="#" class="footer-link small text-white">关于我们</a>
+                        </li>
+                        <li class="list-inline-item mx-2">
+                            <a href="#" class="footer-link small text-white">联系方式</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#" class="footer-link small text-white">隐私政策</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer end -->
+</body>
+</html>

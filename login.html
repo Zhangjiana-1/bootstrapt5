@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>神影视频 - 登录</title>
+    <link rel="stylesheet" href="dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.css">
+    <script src="dist/js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* 自定义样式 */
+        :root {
+            --primary-color: #ff4b4b;
+            --secondary-color: #6c757d;
+            --accent-color: #ffb800;
+            --dark-color: #1a1a1a;
+            --light-color: #f8f9fa;
+            --success-color: #28a745;
+            --info-color: #17a2b8;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --card-bg: #ffffff;
+            --text-dark: #343a40;
+            --text-light: #6c757d;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .login-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 40px 0;
+        }
+        
+        .login-card {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .login-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .login-header {
+            background-color: var(--light-color);
+            color: var(--text-dark);
+            padding: 25px;
+            text-align: center;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .login-body {
+            padding: 30px;
+        }
+        
+        .form-control {
+            border-radius: 8px;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 75, 75, 0.1);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            border-radius: 8px;
+            padding: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: #e03c3c;
+            border-color: #e03c3c;
+            transform: translateY(-2px);
+        }
+        
+        .footer-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: #e03c3c;
+            text-decoration: underline;
+        }
+        
+        footer {
+            background-color: var(--light-color);
+            color: var(--text-dark);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--primary-color));
+            animation: gradientShift 3s linear infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-white bg-white shadow-sm">
+        <div class="container">
+            <!-- Logo -->
+            <a class="navbar-brand d-flex align-items-center" href="前台主页.html">
+                <div class="bg-primary text-white rounded-circle p-2 me-3">
+                    <i class="fa fa-play-circle-o fa-2x"></i>
+                </div>
+                <div>
+                    <h4 class="mb-0 text-primary fw-bold">神影视频</h4>
+                    <small class="text-muted">ShenYing Video</small>
+                </div>
+            </a>
+            
+            <!-- 搜索框 -->
+            <form class="d-flex flex-grow-1 mx-3" role="search">
+                <div class="input-group w-100">
+                    <input class="form-control rounded-start-pill border-primary border-2" type="search" placeholder="搜索电影、电视剧、明星..." aria-label="Search">
+                    <button class="btn btn-primary rounded-end-pill border-primary border-2 text-white" type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </form>
+            
+            <!-- 用户菜单 -->
+            <div class="dropdown">
+                <button class="btn btn-outline-primary rounded-pill dropdown-toggle text-primary" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-user-circle-o me-1"></i>我的
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow-lg rounded-4 mt-2" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" href="login.html"><i class="fa fa-sign-in me-2 text-success"></i>登录</a></li>
+                    <li><a class="dropdown-item" href="register.html"><i class="fa fa-user-plus me-2 text-success"></i>注册</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-success fw-bold" href="admin/index.html"><i class="fa fa-cog me-2"></i>后台管理</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- 登录区域 -->
+    <div class="login-container">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="login-card bg-white">
+                        <div class="login-header">
+                            <h3 class="mb-0">账户登录</h3>
+                            <p class="text-light opacity-80">欢迎回来，请登录您的账户</p>
+                        </div>
+                        <div class="login-body">
+                            <form id="loginForm">
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">用户名</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light text-muted">
+                                            <i class="fa fa-user"></i>
+                                        </span>
+                                        <input type="text" class="form-control" id="username" placeholder="请输入用户名" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">密码</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light text-muted">
+                                            <i class="fa fa-lock"></i>
+                                        </span>
+                                        <input type="password" class="form-control" id="password" placeholder="请输入密码" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3 form-check d-flex justify-content-between">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="rememberMe">
+                                        <label class="form-check-label" for="rememberMe">记住我</label>
+                                    </div>
+                                    <a href="#" class="footer-link">忘记密码?</a>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">登录</button>
+                                <div class="text-center mt-3">
+                                    <span>还没有账户? <a href="register.html" class="footer-link">立即注册</a></span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer class="py-4 text-white" style="background-color: #007bff;">
+        <div class="container">
+            <div class="row g-2 mb-2">
+                <div class="col-lg-10 col-md-12">
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="bg-white rounded-circle p-2 me-2">
+                        <i class="fa fa-play-circle text-primary fa-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="mb-0 text-white">神影视频</h4>
+                            <small class="text-muted">ShenYing Video</small>
+                        </div>
+                    </div>
+                    <p class="text-muted mb-3 small">
+                        25软件工程专升本A班张佳娜
+                    </p>
+                    <p class="text-muted mb-3 small">
+                        提供最新、最热门的电影内容，为您带来极致的观影体验。
+                        我们致力于打造最优质的在线视频平台，让您随时随地享受精彩内容。
+                    </p>
+                    <div class="d-flex gap-4">
+                        <a href="#" class="social-icon bg-light border border-secondary hover:bg-primary rounded-full p-2 transition-all duration-300 transform hover:scale-110">
+                            <i class="fa fa-weixin fa-lg text-primary"></i>
+                        </a>
+                        <a href="#" class="social-icon bg-light border border-secondary hover:bg-primary rounded-full p-2 transition-all duration-300 transform hover:scale-110">
+                            <i class="fa fa-weibo fa-lg text-primary"></i>
+                        </a>
+                        <a href="#" class="social-icon bg-light border border-secondary hover:bg-primary rounded-full p-3 transition-all duration-300 transform hover:scale-110">
+                            <i class="fa fa-qq fa-lg text-primary"></i>
+                        </a>
+                        <a href="#" class="social-icon bg-light border border-secondary hover:bg-primary rounded-full p-3 transition-all duration-300 transform hover:scale-110">
+                            <i class="fa fa-youtube-play fa-lg text-primary"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-12">
+                    <h6 class="text-white mb-3 font-semibold">快速链接</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="前台主页.html" class="footer-link text-muted hover:text-primary transition-all duration-300 text-decoration-none">首页</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-muted pt-2">
+                <div class="row justify-content-between items-center">
+                    <div class="col-md-12 text-center">
+                        <p class="text-muted mb-0">© 2025 神影视频网站 版权所有</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 登录表单提交处理
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // 获取表单数据
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // 简单验证 (实际项目中应替换为真实的后端验证)
+            if (username && password) {
+                // 登录成功后跳转到首页
+                window.location.href = '前台主页.html';
+                
+                // 可以在这里添加记住密码的逻辑
+                if (document.getElementById('rememberMe').checked) {
+                    localStorage.setItem('rememberedUser', username);
+                } else {
+                    localStorage.removeItem('rememberedUser');
+                }
+            } else {
+                alert('请输入用户名和密码');
+            }
+        });
+        
+        // 页面加载时检查记住的用户
+        window.addEventListener('load', function() {
+            const rememberedUser = localStorage.getItem('rememberedUser');
+            if (rememberedUser) {
+                document.getElementById('username').value = rememberedUser;
+                document.getElementById('rememberMe').checked = true;
+            }
+        });
+    </script>
+</body>
+</html>

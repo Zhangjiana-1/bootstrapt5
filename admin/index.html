@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理 - 神影视频</title>
+    <link rel="stylesheet" href="../dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../font-awesome/css/font-awesome.css">
+    <script src="../dist/js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* 自定义样式 */
+        :root {
+            --primary-color: #ff4b4b;
+            --secondary-color: #6c757d;
+            --accent-color: #ffb800;
+            --dark-color: #1a1a1a;
+            --light-color: #f8f9fa;
+            --success-color: #28a745;
+            --info-color: #17a2b8;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --card-bg: #ffffff;
+            --text-dark: #343a40;
+            --text-light: #6c757d;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            color: var(--text-dark);
+        }
+        
+        /* 导航栏样式 */
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--primary-color));
+            animation: gradientShift 3s linear infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .footer-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            position: relative;
+            padding-bottom: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: var(--primary-color);
+        }
+        
+        .footer-link:hover::after {
+            width: 100%;
+        }
+        
+        .social-icon {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .social-icon:hover::before {
+            left: 100%;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 5px 15px rgba(255, 75, 75, 0.3);
+        }
+        
+        /* 管理页面样式 */
+        .management-container {
+            min-height: 60vh;
+        }
+        
+        .card-header {
+            background-color: var(--dark-color);
+            color: white;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #ff3333;
+            border-color: #ff3333;
+        }
+        
+        .stats-card {
+            transition: all 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .stats-icon {
+            font-size: 2.5rem;
+            opacity: 0.8;
+        }
+        
+        .quick-action-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .quick-action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .table-hover tbody tr:hover {
+            background-color: rgba(255, 75, 75, 0.1);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(255, 75, 75, 0.25);
+        }
+    </style>
+</head>
+<body>
+<!-- header begin -->
+    <header>
+        <!-- 顶部导航栏 -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+            <div class="container">
+                <!-- Logo -->
+                <a class="navbar-brand d-flex align-items-center" href="../前台主页.html">
+                    <div class="bg-primary text-white rounded-circle p-2 me-3">
+                        <i class="fa fa-play-circle-o fa-2x"></i>
+                    </div>
+                    <div>
+                        <h4 class="mb-0 text-primary fw-bold">神影视频</h4>
+                        <small class="text-muted">ShenYing Video</small>
+                    </div>
+                </a>
+                
+                <!-- 搜索框 -->
+                <form class="d-flex flex-grow-1 mx-3" role="search">
+                    <div class="input-group w-100">
+                        <input class="form-control rounded-start-pill border-primary border-2" type="search" placeholder="搜索电影、用户..." aria-label="Search">
+                        <button class="btn btn-primary rounded-end-pill border-primary border-2" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- 用户菜单 -->
+                <div class="dropdown">
+                    <button class="btn btn-outline-primary rounded-pill dropdown-toggle text-primary" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-user-circle-o me-1"></i>管理员
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-lg rounded-4 mt-2" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="#"><i class="fa fa-user me-2 text-success"></i>个人中心</a></li>
+                        <li><a class="dropdown-item" href="../register.html"><i class="fa fa-user-plus me-2 text-success"></i>注册</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fa fa-cog me-2 text-success"></i>系统设置</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="../前台主页.html"><i class="fa fa-sign-out me-2"></i>退出登录</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- 主导航栏 -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active fw-semibold text-white" href="index.html"><i class="fa fa-home me-1 text-white"></i>后台首页</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white fw-semibold" href="movie_manage.html">
+                                <i class="fa fa-film me-1 text-white"></i>电影管理
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white fw-semibold" href="#">
+                                <i class="fa fa-users me-1 text-white"></i>用户管理
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white fw-semibold" href="#">
+                                <i class="fa fa-bar-chart me-1 text-white"></i>统计分析
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white fw-semibold" href="#">
+                                <i class="fa fa-cog me-1 text-white"></i>系统设置
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- 管理入口 -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link text-white fw-semibold" href="../前台主页.html">
+                                <i class="fa fa-eye me-1"></i>查看前台
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- header end -->
+
+    <!-- 管理内容区域 -->
+    <div class="container mt-4 management-container">
+        <!-- 页面标题 -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="text-primary">
+                <i class="fa fa-dashboard me-2"></i>
+                后台管理中心
+            </h2>
+            <div class="text-muted">
+                <i class="fa fa-calendar me-1"></i>
+                今天是 2025年12月17日 星期三
+            </div>
+        </div>
+        
+        <!-- 统计信息卡片 -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-3">
+                <div class="card stats-card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <p class="text-muted mb-1">电影总数</p>
+                                <h3 class="text-primary fw-bold">1,234</h3>
+                                <p class="text-success small">
+                                    <i class="fa fa-arrow-up me-1"></i>
+                                    今日新增 12
+                                </p>
+                            </div>
+                            <div class="bg-primary bg-opacity-10 p-3 rounded-full">
+                                <i class="fa fa-film stats-icon text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stats-card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <p class="text-muted mb-1">用户总数</p>
+                                <h3 class="text-info fw-bold">5,678</h3>
+                                <p class="text-success small">
+                                    <i class="fa fa-arrow-up me-1"></i>
+                                    今日新增 28
+                                </p>
+                            </div>
+                            <div class="bg-info bg-opacity-10 p-3 rounded-full">
+                                <i class="fa fa-users stats-icon text-info"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stats-card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <p class="text-muted mb-1">今日访问量</p>
+                                <h3 class="text-success fw-bold">8,910</h3>
+                                <p class="text-success small">
+                                    <i class="fa fa-arrow-up me-1"></i>
+                                    较昨日 +15%
+                                </p>
+                            </div>
+                            <div class="bg-success bg-opacity-10 p-3 rounded-full">
+                                <i class="fa fa-eye stats-icon text-success"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stats-card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <p class="text-muted mb-1">总播放次数</p>
+                                <h3 class="text-warning fw-bold">123,456</h3>
+                                <p class="text-success small">
+                                    <i class="fa fa-arrow-up me-1"></i>
+                                    今日新增 1,234
+                                </p>
+                            </div>
+                            <div class="bg-warning bg-opacity-10 p-3 rounded-full">
+                                <i class="fa fa-play-circle stats-icon text-warning"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 快捷操作和最近活动 -->
+        <div class="row g-4 mb-4">
+            <!-- 快捷操作 -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">快捷操作</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <div class="card quick-action-card h-100 text-center" onclick="window.location.href='movie_manage.html'">
+                                    <div class="card-body">
+                                        <i class="fa fa-plus-circle fa-3x text-primary mb-2"></i>
+                                        <h5 class="card-title text-dark">添加电影</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="card quick-action-card h-100 text-center">
+                                    <div class="card-body">
+                                        <i class="fa fa-users fa-3x text-info mb-2"></i>
+                                        <h5 class="card-title text-dark">管理用户</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="card quick-action-card h-100 text-center">
+                                    <div class="card-body">
+                                        <i class="fa fa-bar-chart fa-3x text-success mb-2"></i>
+                                        <h5 class="card-title text-dark">查看统计</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="card quick-action-card h-100 text-center">
+                                    <div class="card-body">
+                                        <i class="fa fa-cog fa-3x text-warning mb-2"></i>
+                                        <h5 class="card-title text-dark">系统设置</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 最近添加的电影 -->
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">最近添加的电影</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">电影名称</th>
+                                        <th scope="col">类型</th>
+                                        <th scope="col">地区</th>
+                                        <th scope="col">添加时间</th>
+                                        <th scope="col">状态</th>
+                                        <th scope="col">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td class="fw-medium">绿巨人2</td>
+                                        <td>科幻</td>
+                                        <td>美国</td>
+                                        <td>2025-12-17 13:45</td>
+                                        <td><span class="badge bg-success">已发布</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-info me-1">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td class="fw-medium">蚁人</td>
+                                        <td>科幻</td>
+                                        <td>美国</td>
+                                        <td>2025-12-17 12:30</td>
+                                        <td><span class="badge bg-success">已发布</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-info me-1">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td class="fw-medium">复仇者联盟</td>
+                                        <td>科幻</td>
+                                        <td>美国</td>
+                                        <td>2025-12-17 11:15</td>
+                                        <td><span class="badge bg-success">已发布</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-info me-1">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">4</th>
+                                        <td class="fw-medium">钢铁侠</td>
+                                        <td>科幻</td>
+                                        <td>美国</td>
+                                        <td>2025-12-17 10:00</td>
+                                        <td><span class="badge bg-success">已发布</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-info me-1">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">5</th>
+                                        <td class="fw-medium">美国队长</td>
+                                        <td>科幻</td>
+                                        <td>美国</td>
+                                        <td>2025-12-16 18:30</td>
+                                        <td><span class="badge bg-success">已发布</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-info me-1">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="mt-3 text-end">
+                            <a href="movie_manage.html" class="btn btn-outline-primary btn-sm">
+                                <i class="fa fa-list me-1"></i>
+                                查看全部
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 系统状态和公告 -->
+        <div class="row g-4">
+            <!-- 系统状态 -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">系统状态</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="fa fa-server me-2 text-info"></i>服务器状态</span>
+                                <span class="badge bg-success">正常运行</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="fa fa-database me-2 text-primary"></i>数据库状态</span>
+                                <span class="badge bg-success">连接正常</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="fa fa-memory me-2 text-warning"></i>内存使用率</span>
+                                <span class="badge bg-warning">68%</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="fa fa-hdd-o me-2 text-danger"></i>磁盘使用率</span>
+                                <span class="badge bg-info">45%</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="fa fa-clock-o me-2 text-secondary"></i>系统运行时间</span>
+                                <span class="text-muted">24天12小时</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 系统公告 -->
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">系统公告</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="accordion" id="announcementAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        <i class="fa fa-bullhorn text-primary me-2"></i>
+                                        系统更新通知（2025-12-15）
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#announcementAccordion">
+                                    <div class="accordion-body">
+                                        <p>系统已完成最新版本更新，新增功能包括：</p>
+                                        <ul class="list-disc ms-4">
+                                            <li>电影管理页面优化，增加批量操作功能</li>
+                                            <li>用户管理系统升级，支持更多筛选条件</li>
+                                            <li>统计分析模块新增图表展示</li>
+                                            <li>修复了已知bug，提升系统稳定性</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        <i class="fa fa-bullhorn text-primary me-2"></i>
+                                        服务器维护通知（2025-12-10）
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#announcementAccordion">
+                                    <div class="accordion-body">
+                                        <p>系统将于2025年12月12日凌晨2:00-4:00进行服务器维护，期间网站可能会短暂无法访问。请提前做好准备。</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        <i class="fa fa-bullhorn text-primary me-2"></i>
+                                        新功能上线通知（2025-12-01）
+                                    </button>
+                                </h2>
+                                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#announcementAccordion">
+                                    <div class="accordion-body">
+                                        <p>电影推荐系统已正式上线，系统将根据用户观看记录和偏好智能推荐相关电影内容。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer begin -->
+    <footer class="mt-4 py-4 text-white" style="background-color: #007bff;">
+        <div class="container">
+            <!-- 页脚顶部 -->
+            <div class="row g-2 mb-2">
+                <!-- 网站信息 -->
+                <div class="col-lg-10 col-md-12">
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="bg-white rounded-circle p-2 me-2">
+                        <i class="fa fa-play-circle text-success fa-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="mb-0 text-white">神影视频</h4>
+                            <small class="text-white">ShenYing Video</small>
+                        </div>
+                    </div>
+                    <p class="text-white mb-3 small">
+                        25软件工程专升本A班张佳娜
+                    </p>
+                    <p class="text-white mb-3 small">
+                        提供最新、最热门的电影内容，为您带来极致的观影体验。
+                        我们致力于打造最优质的在线视频平台，让您随时随地享受精彩内容。
+                    </p>
+                    <!-- 社交媒体 -->
+                    <div class="d-flex gap-4">
+                        <a href="#" class="social-icon bg-white border border-success rounded-full p-2 transition-all duration-300 transform hover:scale-110">
+                            <i class="fa fa-weixin fa-lg text-success"></i>
+                        </a>
+                        <a href="#" class="social-icon bg-white border border-success rounded-full p-2 transition-all duration-300 transform hover:scale-110">
+                            <i class="fa fa-weibo fa-lg text-success"></i>
+                        </a>
+                        <a href="#" class="social-icon bg-white border border-success rounded-full p-3 transition-all duration-300 transform hover:scale-110">
+                            <i class="fa fa-qq fa-lg text-success"></i>
+                        </a>
+                        <a href="#" class="social-icon bg-white border border-success rounded-full p-3 transition-all duration-300 transform hover:scale-110">
+                            <i class="fa fa-youtube-play fa-lg text-success"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 快速链接 -->
+                <div class="col-lg-2 col-md-12">
+                    <h6 class="text-white mb-3 font-semibold">快速链接</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="../前台主页.html" class="footer-link text-light hover:text-white transition-all duration-300 text-decoration-none">首页</a></li>
+                        <li class="mb-2"><a href="index.html" class="footer-link text-light hover:text-white transition-all duration-300 text-decoration-none">后台首页</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 页脚底部 -->
+            <div class="border-t border-light pt-2">
+                <div class="row justify-content-between items-center">
+                    <div class="col-md-12 text-center">
+                        <p class="text-white mb-0">© 2025 神影视频网站 版权所有</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer end -->
+</body>
+</html>
